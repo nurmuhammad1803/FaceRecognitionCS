@@ -1,7 +1,7 @@
 from telebot import types
 
 stats_menu = types.InlineKeyboardMarkup(row_width=2)
-item_number_of_students = types.InlineKeyboardButton(text='Number of students', callback_data='number_students')
+item_number_of_students = types.InlineKeyboardButton(text='List of students', callback_data='list_students')
 item_number_of_unknown_faces = types.InlineKeyboardButton(text='Number of unknown faces registered',
                                                           callback_data='number_unknowns')
 item_unknown_faces = types.InlineKeyboardButton(text="List of unknown faces", callback_data="unknown_faces")

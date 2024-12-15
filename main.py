@@ -55,13 +55,11 @@ update_thread.start()
 tolerance_thread = threading.Thread(target=update_tolerance)
 tolerance_thread.start()
 
-
-# Registering new student:
 def reg_name(message):
     global student_name
     student_name = message.text
 
-    bot.send_message(admin, f'Name of the newly added student is {student_name}, correct?',
+    bot.send_message(admin, f'Name of the new persona is {student_name}, correct?',
                      reply_markup=confirm_add_student)
 
 ############################### Initializing bot for different commands like /start; /statistics; & etc.
@@ -71,8 +69,8 @@ def start(message):
     global admin
     admin = message.chat.id
 
-    bot.reply_to(message, f"Hello! I am a bot, which will provide statistics about students' attendance")
-    bot.send_message(admin, "Send me '/stats' command to open the statistics menu")
+    bot.reply_to(message, f"Welcome back! Here you can see students' attendance in real-time and add unknown personas )")
+    bot.send_message(admin, "Send me '/statistics' command to open the statistics menu")
 
 @bot.message_handler(commands=['statistics'])
 def start(message):
@@ -80,7 +78,7 @@ def start(message):
 
 @bot.message_handler(commands=['settings'])
 def start(message):
-    bot.send_message(message.chat.id, "What setting do you want to change?", reply_markup=settings_menu)
+    bot.send_message(message.chat.id, "You may change tolerance of facial recognition?", reply_markup=settings_menu)
 
 @bot.message_handler(content_types=['text'])
 def check(message):
@@ -91,8 +89,19 @@ def check(message):
 @bot.callback_query_handler(func=lambda call: True)
 def callback(call):
     global add_student, unknown_face_num, tolerance, name
-    if call.data == 'number_students':
-        bot.send_message(admin, f'{number_of_faces} faces detected')
+    if call.data == 'list_students':
+        bot.send_message(admin, f'{len(os.listdir('students'))} students detected. Here is the list of them:')
+        
+
+        for photo_file_std in os.listdir('students'):
+            if photo_file_std.startswith('student_') and photo_file_std.endswith('.jpg'):
+                current_student_name = photo_file_std.split('_')[1].split('.')[0]
+                photo_path = os.path.join('students', photo_file_std)
+                
+                with open(photo_path, 'rb') as photo:
+                    bot.send_photo(admin, photo, caption=f"Student: {current_student_name}")
+
+
     elif call.data == 'number_unknowns':
         bot.send_message(admin, f'{len(unknown_face_encodings)} unknown faces are registered')
     elif call.data == 'unknown_faces':
