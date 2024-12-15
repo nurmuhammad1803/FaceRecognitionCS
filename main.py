@@ -9,7 +9,7 @@ import queue
 import shutil
 
 
-from install import TOKEN, UNKNOWN_FACES_DIR_PATH, DEFAULT_ADMIN, CAMERA_IP
+from install import TOKEN, UNKNOWN_FACES_DIR_PATH, DEFAULT_ADMIN, CAMERA_IP, SET_FPS
 from help import clear_directory, unknown_faces_saver, unknown_faces_sender
 from bot_settings import stats_menu, confirm_add_student, settings_menu, tolerance_menu
 
@@ -151,64 +151,26 @@ else:
     added_face_encodings = []
     added_face_names = []
 
-
-# Create a directory to save the unknown face images
 os.makedirs('unknown_faces', exist_ok=True)
 
-
-# Define a function that opens the webcam and gets data from it
-# def face_rec():
-#     global face_counter, admin
-
-#     video_capture = cv2.VideoCapture(CAMERA_IP)
-
-#     while True:
-#         ret, frame = video_capture.read()
-
-#         face_locations = face_recognition.face_locations(frame)
-#         face_encodings = face_recognition.face_encodings(frame, face_locations)
-#         face_counter = len(face_locations)
-#         i = 0
-        
-#         for face_encoding in face_encodings:
-#             matches = face_recognition.compare_faces(known_face_encodings, face_encoding, tolerance=tolerance)
-#             unknown_face_matches = face_recognition.compare_faces(unknown_face_encodings, face_encoding, tolerance=0.5)
-#             name = "Unknown"
-#             if True in matches:
-#                 first_match_index = matches.index(True)
-#                 name = known_face_names[first_match_index]
-
-#             top, right, bottom, left = face_locations[i]
-#             if (name == "Unknown") and not (True in unknown_face_matches):
-#                 face_image = frame[top:bottom, left:right]
-#                 unknown_face_counter = len(unknown_face_encodings)
-#                 unknown_faces_saver(face_image, unknown_face_counter)
-#                 unknown_faces_sender(unknown_face_counter, bot, admin)
-#                 unknown_face_encodings.append(face_encoding)
-#             cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
-#             cv2.putText(frame, name, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
-#             i += 1
-
-#         cv2.imshow('Video', frame)
-#         if cv2.waitKey(1) & 0xFF == ord('q'):
-#             break
-
-#     video_capture.release()
-#     cv2.destroyAllWindows()
-
-
-############################################### Face_rec using multiple cameras
+############################################### FACE_RECording using multiple cameras
 def face_rec():
     global face_counter, admin
+    video_captures = []
+    for ip in CAMERA_IP:
+        video_capture = cv2.VideoCapture(ip)
+        if not video_capture.isOpened():
+            print(f"[ERROR] Camera {ip} is not accessible.")
+            continue
 
-    # Initialize video captures for each camera
-    video_captures = [cv2.VideoCapture(ip) for ip in CAMERA_IP]
+        video_capture.set(cv2.CAP_PROP_FPS, SET_FPS)
+        video_captures.append(video_capture)
 
     while True:
         for cam_index, video_capture in enumerate(video_captures):
             ret, frame = video_capture.read()
             if not ret:
-                print(f"Camera {cam_index} is not accessible.")
+                print(f"[ERROR] Camera {cam_index} is not accessible.")
                 continue
 
             face_locations = face_recognition.face_locations(frame)
@@ -237,14 +199,11 @@ def face_rec():
                 cv2.putText(frame, name, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
                 i += 1
 
-            # Display each camera feed with its index
             cv2.imshow(f'Camera {cam_index}', frame)
 
-        # Break the loop if 'q' is pressed
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-    # Release all video captures and close windows
     for video_capture in video_captures:
         video_capture.release()
     cv2.destroyAllWindows()
