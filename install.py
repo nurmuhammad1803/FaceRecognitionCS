@@ -1,5 +1,5 @@
 TOKEN = '' # write the token of your bot      type:string
-ABSOLUTE_PATH = "C:\\Users\\Flexy\\Desktop\\CS\\_faceid\\FaceRecognitionCS\\" # write absolue path to the project folder
+ABSOLUTE_PATH = "" # write absolue path to the project folder
 DATABASE_PATH = ABSOLUTE_PATH + "students"
 UNKNOWN_FACES_DIR_PATH = ABSOLUTE_PATH + 'unknown_faces'
 KNOWN_ENCODINGS_PATH = 'database/known_face_encodings.npy'
