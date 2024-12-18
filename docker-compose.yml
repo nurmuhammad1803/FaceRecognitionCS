@@ -1,14 +1,11 @@
 version: '3.8'
 
 services:
-  faceid:
+  faceid_app:
     build:
       context: .
       dockerfile: Dockerfile
+    image: faceid_cs  # Custom image name
     container_name: faceid_container
-    restart: unless-stopped
-    ports:
-      - "8000:8000"  # Example port mapping (if needed)
     volumes:
-      - .:/app       # Mount local project files into the container
-    tty: true        # Keeps the container running for debugging
+      - .:/app  # Mount the current directory to the container
