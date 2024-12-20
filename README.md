@@ -12,15 +12,15 @@
 
 ## BEFORE LAUNCHING
 1. Make sure you have changed variables in install.py
-2.  Download [Microsoft Visual Studio Build Tools C++](https://visualstudio.microsoft.com/ru/visual-cpp-build-tools/) and install module **Desktop Development with C++**
-3.  Install Python 3 and pip
+2. RUN vs_BuildTools.exe by [Microsoft Visual Studio Build Tools C++](https://visualstudio.microsoft.com/ru/visual-cpp-build-tools/)  and install module **Desktop Development with C++**
+3. Install Python 3 and pip
 
 ## HOW TO RUN:
 Windows :window: : RUN ```setup.bat``` file
 
 MACOS/Linux :apple: : Open terminal and navigate to the project folder. Then execute ```sh setup.sh ```
 
-VIA DOCKER :whale: : Open terminal and navigate to the repository folder. RUN ```docker compose up```
+VIA DOCKER :whale: (Currently not available) : Open terminal and navigate to the repository folder. RUN ```docker compose up```
 
 ## Setting up :gear:
 Change the values of variables inside the install.py file to set your bot up:
