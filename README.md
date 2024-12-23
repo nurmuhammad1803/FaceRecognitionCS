@@ -2,13 +2,13 @@
 *Face Recognition Project for CS Polito for registering new students using Telegram Bot and multiple camera sources*
 
 ## MENU:
-1. Features(#features)
-1. Example(#example)
-1. Before Launching(#before-launching)
-1. Settings(#setting-up)
-1. Customizing(#customizing-bot)
-1. Dependencies(#dependencies)
-1. Thank you )(#credentials)
+1. [Features](#features)
+2. [Example](#example)
+3. [Before Launching](#before-launching)
+4. [Settings](#setting-up)
+5. [Customizing](#customizing-bot)
+6. [Dependencies](#dependencies)
+7. [Thank you )](#credentials)
 
 ## Features:
 1. **Face Recognition** (Tracks multiple faces from video source in real-time and recognizes registered faces)
