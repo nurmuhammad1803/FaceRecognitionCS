@@ -20,7 +20,7 @@
 
 ## Example:
 ![faceid_cam](https://cloud.githubusercontent.com/assets/896692/24430398/36f0e3f0-13cb-11e7-8258-4d0c9ce1e419.gif)
-![tg_bot](https://i.postimg.cc/fb2kbMSF/example.png)
+![tg_bot](https://i.postimg.cc/Lsf9BNcN/image.png)
 
 ## BEFORE LAUNCHING
 1. Make sure you have changed variables in install.py
